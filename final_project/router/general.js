@@ -72,7 +72,13 @@ public_users.get('/author/:author', function (req, res) {
         let booksByAuthor = [];
         for (let book in books) {
             if (books[book].author === author) {
-                booksByAuthor.push(books[book]);
+                let bookDetails = {
+                    isbn: book,
+                    author: books[book].author,
+                    title: books[book].title,
+                    reviews: books[book].reviews,
+                };
+                booksByAuthor.push(bookDetails);
             }
         }
 
@@ -83,7 +89,7 @@ public_users.get('/author/:author', function (req, res) {
         }
     })
         .then((booksByAuthor) => {
-            return res.status(200).json(booksByAuthor);
+            return res.status(200).json({ booksByAuthor });
         })
         .catch((err) => {
             return res.status(404).json(err);
@@ -99,7 +105,13 @@ public_users.get('/title/:title', function (req, res) {
         let booksByTitle = [];
         for (let book in books) {
             if (books[book].title === title) {
-                booksByTitle.push(books[book]);
+                let bookDetails = {
+                    isbn: book,
+                    author: books[book].author,
+                    title: books[book].title,
+                    reviews: books[book].reviews,
+                };
+                booksByTitle.push(bookDetails);
             }
         }
 
@@ -110,7 +122,7 @@ public_users.get('/title/:title', function (req, res) {
         }
     })
         .then((booksByTitle) => {
-            return res.status(200).json(booksByTitle);
+            return res.status(200).json({ booksByTitle });
         })
         .catch((err) => {
             return res.status(404).json(err);

@@ -89,10 +89,20 @@ regd_users.put('/auth/review/:isbn', (req, res) => {
 
     // Add the review to the book
     books[isbn].reviews[username] = review;
+    let response = {
+        message: 'Review added successfully',
+        book: {
+            isbn: isbn,
+            author: books[isbn].author,
+            title: books[isbn].title,
+            reviews: books[isbn].reviews
+        }
+    };
     return res
         .status(200)
-        .json({ message: 'Review added successfully', book: books[isbn] });
+        .json(response);
 });
+
 
 // Delete a book review
 regd_users.delete('/auth/review/:isbn', (req, res) => {
@@ -115,9 +125,7 @@ regd_users.delete('/auth/review/:isbn', (req, res) => {
 
     // Delete the review
     delete books[isbn].reviews[username];
-    return res
-        .status(200)
-        .json({ message: 'Review deleted successfully', book: books[isbn] });
+    return res.status(200).json({ message: 'Review deleted successfully' , book: books[isbn]});
 });
 
 module.exports.authenticated = regd_users;
